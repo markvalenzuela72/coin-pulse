@@ -22,7 +22,6 @@ const Header = () => {
                     <p>Search Modal</p>
                     <Link href="/coins" className={cn('nav-link', {
                         'is-active': pathname === '/coins',
-                        'is-home' : true
                     })}>All Coins</Link>
                 </nav>
             </div>
