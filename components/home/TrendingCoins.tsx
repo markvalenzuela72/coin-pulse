@@ -3,7 +3,7 @@ import { fetcher } from '@/lib/coingecko.actions';
 import Image from 'next/image';
 import Link from 'next/link';
 import { TrendingDown, TrendingUp } from 'lucide-react';
-import { cn, formatCurrency } from '@/lib/utils';
+import { cn, formatCurrency, formatPercentage } from '@/lib/utils';
 import { TrendingCoinsFallback } from '@/components/home/fallback';
 
 const columns: DataTableColumn<TrendingCoin>[] = [
@@ -40,7 +40,7 @@ const columns: DataTableColumn<TrendingCoin>[] = [
           ) : (
             <TrendingDown width={16} height={16} />
           )}
-          <p>{item.data.price_change_percentage_24h.usd.toFixed(2)}%</p>
+          <p>{formatPercentage(item.data.price_change_percentage_24h.usd)}</p>
         </div>
       );
     },
@@ -69,7 +69,7 @@ const TrendingCoins = async () => {
       <h4>Trending Coins</h4>
 
       <DataTable
-        data={trendingCoins.coins.slice(0, 6) || []}
+        data={trendingCoins.coins.slice(0, 6)}
         columns={columns}
         rowKey={(coin) => coin.item.id}
         tableClassName="trending-coins-table"
