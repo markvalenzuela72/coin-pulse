@@ -7,7 +7,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import React from 'react';
 import { cn } from '@/lib/utils';
 
 const DataTable = <T,>({
