@@ -36,14 +36,8 @@ interface Ticker {
   trade_url: string;
 }
 
-type Period =
-  | 'daily'
-  | 'weekly'
-  | 'monthly'
-  | '3months'
-  | '6months'
-  | 'yearly'
-  | 'max';
+type Period = 'daily' | 'weekly' | 'monthly' | '3months' | '6months' | 'yearly';
+// | 'max';
 
 interface CoinMarketData {
   id: string;
@@ -122,8 +116,8 @@ interface TopGainersLosers {
   name: string;
   symbol: string;
   image: string;
-  price: number;
-  priceChangePercentage24h: number;
+  current_price: number;
+  price_change_percentage_24h: number;
 }
 
 interface TopGainersLosersResponse {
