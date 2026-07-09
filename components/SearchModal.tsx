@@ -12,9 +12,9 @@ import {
 } from '@/components/ui/command';
 import { Button } from './ui/button';
 import { fetcher, searchCoins } from '@/lib/coingecko.actions';
-import { Search as SearchIcon, TrendingDown, TrendingUp } from 'lucide-react';
+import { Search as SearchIcon } from 'lucide-react';
 import { useState } from 'react';
-import { cn, formatPercentage } from '@/lib/utils';
+import { cn } from '@/lib/utils';
 import useSWR from 'swr';
 import { useDebounce, useKey } from 'react-use';
 
@@ -74,9 +74,11 @@ const SearchModal = () => {
     [searchQuery],
   );
 
-  const { data: searchResults = [], isValidating: isSearching } = useSWR<
-    SearchCoin[]
-  >(
+  const {
+    data: searchResults = [],
+    isValidating: isSearching,
+    error: searchError,
+  } = useSWR<SearchCoin[]>(
     debouncedQuery ? ['coin-search', debouncedQuery] : null,
     ([, query]) => searchCoins(query as string),
     {
@@ -155,8 +157,13 @@ const SearchModal = () => {
               ))}
             </CommandGroup>
           )}
-
-          {isNoResults && <CommandEmpty>No coins found.</CommandEmpty>}
+          {(searchError || isNoResults) && (
+            <CommandEmpty>
+              {searchError
+                ? 'Failed to load results. Please try again.'
+                : 'No coins found.'}
+            </CommandEmpty>
+          )}
 
           {isResultsVisible && (
             <CommandGroup
