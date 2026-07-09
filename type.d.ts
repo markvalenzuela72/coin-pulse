@@ -13,8 +13,8 @@ interface CandlestickChartProps {
   children?: React.ReactNode;
   mode?: 'historical' | 'live';
   initialPeriod?: Period;
-  liveInterval: '1s' | '1m';
-  setLiveInterval: (interval: '1s' | '1m') => void;
+  liveInterval?: '1s' | '1m';
+  setLiveInterval?: (interval: '1s' | '1m') => void;
 }
 
 interface ConverterProps {
@@ -290,7 +290,7 @@ type PaginationLinkProps = {
 interface Pagination {
   currentPage: number;
   totalPages: number;
-  hasMorePages: boolean;
+  // hasMorePages: boolean;
 }
 
 interface HeaderProps {
