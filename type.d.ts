@@ -13,8 +13,8 @@ interface CandlestickChartProps {
   children?: React.ReactNode;
   mode?: 'historical' | 'live';
   initialPeriod?: Period;
-  liveInterval: '1s' | '1m';
-  setLiveInterval: (interval: '1s' | '1m') => void;
+  liveInterval?: '1s' | '1m';
+  setLiveInterval?: (interval: '1s' | '1m') => void;
 }
 
 interface ConverterProps {
@@ -91,9 +91,9 @@ interface SearchCoin {
   market_cap_rank: number | null;
   thumb: string;
   large: string;
-  data: {
+  data?: {
     price?: number;
-    price_change_percentage_24h: number;
+    price_change_percentage_24h?: number;
   };
 }
 
@@ -290,7 +290,7 @@ type PaginationLinkProps = {
 interface Pagination {
   currentPage: number;
   totalPages: number;
-  hasMorePages: boolean;
+  // hasMorePages: boolean;
 }
 
 interface HeaderProps {

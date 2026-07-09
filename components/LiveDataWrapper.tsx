@@ -7,6 +7,7 @@ import DataTable from '@/components/DataTable';
 import { formatCurrency, timeAgo } from '@/lib/utils';
 import { useState } from 'react';
 import CoinHeader from './CoinHeader';
+import Link from 'next/link';
 // import CoinHeader from '@/components/CoinHeader';
 
 const LiveDataWrapper = ({
@@ -57,6 +58,44 @@ const LiveDataWrapper = ({
     },
   ];
 
+  const exchangeColumns: DataTableColumn<Ticker>[] = [
+    {
+      header: 'Exchange',
+      cellClassName: 'exchange-name',
+      cell: (exchange) => (
+        <>
+          {exchange.market.name ? exchange.market.name : '-'}
+          <Link href={exchange.trade_url} target="_blank" />
+        </>
+      ),
+    },
+    {
+      header: 'Pair',
+      cellClassName: 'pair',
+      cell: (exchange) => (
+        <p>
+          {exchange.base} / {exchange.target}
+        </p>
+      ),
+    },
+    {
+      header: 'Price',
+      cellClassName: 'price-cell',
+      cell: (exchange) =>
+        exchange.converted_last.usd
+          ? formatCurrency(exchange.converted_last.usd)
+          : '-',
+    },
+    {
+      header: 'Last Traded',
+      headClassName: 'text-end',
+      cellClassName: 'time-cell',
+      cell: (exchange) =>
+        exchange.timestamp ? timeAgo(exchange.timestamp) : '-',
+    },
+  ];
+
+  const recentExchanges = coin.tickers.slice(0, 10);
   return (
     <section id="live-data-wrapper">
       <CoinHeader
@@ -99,6 +138,18 @@ const LiveDataWrapper = ({
             data={trades}
             rowKey={(_, index) => index}
             tableClassName="trades-table"
+          />
+        </div>
+      )}
+      <Separator className="divider" />
+      {exchangeColumns && (
+        <div className="exchange-section">
+          <h4>Exchange Listings</h4>
+          <DataTable
+            columns={exchangeColumns}
+            data={recentExchanges}
+            rowKey={(_, index) => index}
+            tableClassName="exchange-table"
           />
         </div>
       )}
